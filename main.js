@@ -1,39 +1,33 @@
 // Defining text characters for the empty and full hearts for you to use later.
-const EMPTY_HEART = '♡'
-const FULL_HEART = '♥'
 
 let glyphStates = {
-  '♡':'♥',
-  '♥':'♡'
-}
-
-let colorStates = {
-  "red" : "",
-  "": "red"
+  "♡": "♥",
+  "♥": "♡"
 };
 
-let articleHearts = document.querySelectorAll('.like')
 
-function liker(e) {
-  let heart = e.target
-  mimicServerCall().then(() => {
-    if (EMPTY_HEART === heart.innerText) {
-      heart.innerText = FULL_HEART
-      heart.classList.add("activated-heart")
-    } else {
-      heart.innerText = EMPTY_HEART
-      heart.classList.remove("activated-heart")
-    }
-} )
-    .catch(function (error) {
-      document.getElementById("modal").className = "";
-      setTimeout(function () {
-        document.getElementById("modal").className = "hidden";
-      }, 5000);
+//mimicServerCall
+let articleHearts = document.querySelectorAll(".like");
+
+function likeCallback(e) {
+  let heart = e.target;
+  mimicServerCall()
+    .then(function(serverMessage){ 
+      alert("You notified the server!");
+      alert(serverMessage);
+      heart.innerText = glyphStates[heart.innerText];
+      heart.style.color = colorStates[heart.style.color];
     })
+    .catch(function(error) {
+      let modal = document.getElementById('modal').className = 'hidden';
+      modal.getElementById('modal-message').innerText = error
+      setTimeout(function(){ modal.className = "hidden" }, 5000); 
+    });
 }
 
-for (let e of articleHearts) { e.addEventListener("click", liker) }
+for (let glyph of articleHearts) {
+  glyph.addEventListener("click", likeCallback);
+}
 
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
