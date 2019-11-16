@@ -12,7 +12,7 @@ let articleHearts = document.querySelectorAll(".like");
 function likeCallback(e) {
   let heart = e.target;
   mimicServerCall()
-    .then(function(serverMessage){ 
+    .then(function(serverMessage){
       alert("You notified the server!");
       alert(serverMessage);
       heart.innerText = glyphStates[heart.innerText];
@@ -21,7 +21,7 @@ function likeCallback(e) {
     .catch(function(error) {
       let modal = document.getElementById('modal').className = 'hidden';
       modal.getElementById('modal-message').innerText = error
-      setTimeout(function(){ modal.className = "hidden" }, 5000); 
+      setTimeout(function(){ modal.className = "hidden" }, 5000);
     });
 }
 
